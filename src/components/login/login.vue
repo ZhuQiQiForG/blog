@@ -13,10 +13,42 @@
 			</div>
 			<div class="login-button">
 				<button @click="loging">登录</button>
-				<button>注册</button>
+				<button @click="register">注册</button>
 			</div>
 		</div>
 		<div class="right-content"></div>
+		<div class="reg-wrapper" v-show="reging">
+			<h1 class="title">注册用户</h1>
+			<table>
+				<tr>
+					<td>
+						<label for="reguserName">用户名</label>
+					</td>
+					<td>
+						<input type="" name="" id="reguserName" placeholder="请输入用户名" v-model="reguserName">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="regpassword">密码</label>
+					</td>
+					<td>
+						<input type="" name="" id="regpassword" placeholder="请输入密码" v-model="regpassword">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="regrepassword">确认密码</label>
+					</td>
+					<td>
+						<input type="" name="" id="regrepassword" placeholder="请再次输入密码" v-model="regrepassword">
+					</td>
+				</tr>
+			</table>
+			<div class="regButton">
+				<button @click="reg">注册</button>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -24,12 +56,31 @@
 	export default {
 		data() {
 			return {
-				showLogin: true
+				showLogin: true,
+				reging: false,
+				reguserName: '',
+				regpassword: '',
+				regrepassword: ''
 			};
 		},
 		methods: {
 			loging() {
 				this.showLogin = false;
+			},
+			register() {
+				this.reging = true;
+			},
+			reg() {
+				let userName = this.reguserName;
+				let password = this.regpassword;
+				let repassword = this.regrepassword;
+				this.$http.post('/api/login/createAccount', {
+					userName: userName,
+					password: password,
+					repassword: repassword
+				}).then(function (res) {
+					console.log(res);
+				});
 			}
 		}
 	};
@@ -58,4 +109,13 @@
 				margin: 15px auto
 				width: 95%
 				border-bottom: 2px solid #333
+		.reg-wrapper
+			position: fixed
+			left: 50%
+			top: 50%
+			margin-left: -177px
+			margin-top: -219px
+			width: 354px
+			height: 438px
+			background: #fff
 </style>

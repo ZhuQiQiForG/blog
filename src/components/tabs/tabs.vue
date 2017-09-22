@@ -19,7 +19,7 @@
 	export default {
 		props: {
 			article: {
-				type: Array
+				type: Object
 			}
 		}
 	};
