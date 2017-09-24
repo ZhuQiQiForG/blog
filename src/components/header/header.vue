@@ -1,12 +1,18 @@
 <template>
 	<div class="header">
-		<h1 class="title">xxx的博客</h1>
-		<span class="autograph">个人签名</span>
+		<h1 class="title">{{this.userName}}的博客</h1>
+		<span class="autograph"></span>
 	</div>
 </template>
 
 <script type="text/ecmascript-6">
-	
+	export default {
+		props: {
+			userName: {
+				type: String
+			}
+		}
+	};
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

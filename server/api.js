@@ -9,6 +9,9 @@ router.post('/api/login/createAccount',(req,res) => {
     let userName = req.body.userName;
     let password = req.body.password;
     let repassword = req.body.repassword;
+    let phone = req.body.phone;
+    let github = req.body.github;
+    let mail = req.body.mail;
     // 验证账号信息
     if (!userName) {
     	res.send('请输入用户名且不为空');
@@ -25,18 +28,52 @@ router.post('/api/login/createAccount',(req,res) => {
     	res.send('请确保两次密码输入一致');
     	return;
     }
-    res.send('成功注册');
-});
-// 获取已有账号接口
-router.get('/api/login/getAccount',(req,res) => {
-    // 通过模型去查找数据库
-    models.Login.find((err,data) => {
-        if (err) {
-            res.send(err);
+    let newAccount = new models.Login({
+        userName: userName,
+        password: password,
+        phone,
+        github,
+        mail
+    });
+    models.Login.findOne({userName: userName, password: password}, function(err, doc) {
+        if (doc == null) {
+            newAccount.save((err, data) => {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.send('账号创建成功');
+                }
+            })
         } else {
-            res.send(data);
+            res.send('用户名已存在');
         }
     });
+});
+// 登录验证
+router.post('/api/login/login', (req, res) => {
+    let userName = req.body.userName;
+    let password = req.body.password;
+    if (userName) {
+        models.Login.findOne({userName: userName}, function(err, doc) {
+            if (doc == null) {
+                res.send('用户不存在');
+            } else if (doc.password === password) {
+                res.send('successed');
+            } else {
+                res.send('密码错误');
+            }
+        });
+    } else {
+        res.send('请输入用户名');
+    }
+});
+
+// 获取用户信息 get方法和post方法获取数据方式不同 post:req.body; get: req.query;
+router.get('/api/user/getUserInfo', (req, res) => {
+    let userName = req.query.userName;
+    models.Login.findOne({userName: userName}, function(err, doc) {
+        return res.json(doc);
+    })
 });
 
 module.exports = router;

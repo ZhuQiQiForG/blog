@@ -5,11 +5,11 @@
 			<div class="line"></div>
 			<div class="login-wrapper">
 				<label for="userName">用户名</label>
-				<input type="" name="" id="userName">
+				<input type="" name="" id="userName" v-model="userName">
 			</div>
 			<div class="login-wrapper">
 				<label for="passWord">密码</label>
-				<input type="" name="" id="passWord">	
+				<input type="" name="" id="passWord" v-model="password">	
 			</div>
 			<div class="login-button">
 				<button @click="loging">登录</button>
@@ -44,6 +44,30 @@
 						<input type="" name="" id="regrepassword" placeholder="请再次输入密码" v-model="regrepassword">
 					</td>
 				</tr>
+				<tr>
+					<td>
+						<label for="regphone">手机号</label>
+					</td>
+					<td>
+						<input type="" name="" id="regphone" placeholder="请输入手机号" v-model="regphone">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="reggithub">github</label>
+					</td>
+					<td>
+						<input type="" name="" id="reggithub" placeholder="请输入github" v-model="reggithub">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="regmail">邮箱</label>
+					</td>
+					<td>
+						<input type="" name="" id="regmail" placeholder="请输入邮箱" v-model="regmail">
+					</td>
+				</tr>
 			</table>
 			<div class="regButton">
 				<button @click="reg">注册</button>
@@ -58,28 +82,55 @@
 			return {
 				showLogin: true,
 				reging: false,
+				userName: '',
+				password: '',
 				reguserName: '',
 				regpassword: '',
-				regrepassword: ''
+				regrepassword: '',
+				regphone: '',
+				reggithub: '',
+				regmail: ''
 			};
 		},
 		methods: {
 			loging() {
-				this.showLogin = false;
+				let userName = this.userName;
+				let password = this.password;
+				let _this = this;
+				this.$http.post('/api/login/login', {
+					userName: userName,
+					password: password
+				}).then(function (res) {
+					if (res.data === 'successed') {
+						_this.$router.push({path: '/index', query: {userName: userName}});
+					} else {
+						alert(res.data);
+					}
+				});
 			},
 			register() {
-				this.reging = true;
+				this.reging = !this.reging;
 			},
 			reg() {
 				let userName = this.reguserName;
 				let password = this.regpassword;
 				let repassword = this.regrepassword;
+				let phone = this.regphone;
+				let github = this.reggithub;
+				let mail = this.regmail;
+				let _this = this;
 				this.$http.post('/api/login/createAccount', {
 					userName: userName,
 					password: password,
-					repassword: repassword
+					repassword: repassword,
+					phone: phone,
+					github: github,
+					mail: mail
 				}).then(function (res) {
-					console.log(res);
+					alert(res.data);
+					if (res.data === '账号创建成功') {
+						_this.register();
+					}
 				});
 			}
 		}
