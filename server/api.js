@@ -73,7 +73,98 @@ router.get('/api/user/getUserInfo', (req, res) => {
     let userName = req.query.userName;
     models.Login.findOne({userName: userName}, function(err, doc) {
         return res.json(doc);
-    })
+    });
 });
+
+// 获取用户文章分类信息
+router.get('/api/article/getArticleType', (req, res) => {
+	let userName = req.query.userName;
+	models.type.findOne({userName: userName}, function(err, doc) {
+		return res.json(doc);
+	});
+});
+
+// 创建用户文章分类
+router.get('/api/article/addArticleType', (req, res) => {
+	let userName = req.query.userName;
+	let articleType = [];
+	articleType.push(req.query.articleType);
+	let newArticleType = new models.type({
+		userName: userName,
+		articleType: articleType
+	});
+	if (articleType[0]) {
+		models.type.findOne({userName: userName}, function(err, doc) {
+			if (doc) {
+				let olddata = doc;
+				if (!olddata.articleType.indexOf(articleType[0])) {
+					res.send('分类已存在');
+				} else {
+					olddata.articleType.push(articleType[0]);
+					let newdata = {$set: {articleType:olddata.articleType}};
+					models.type.update(doc.articleType,newdata,function(err, result) {
+						if (err) {
+							res.send(err);
+						} else {
+							res.send('文章分类添加成功');
+						}
+					});
+				}
+			} else {
+				newArticleType.save((err, data) => {
+					if (err) {
+						res.send(err);
+					} else {
+						res.send('文章分类添加成功');
+					}
+				});
+			}
+		})
+	} else {
+		res.send('分类名不能为空');
+	}
+});
+
+// 上传文章
+router.get('/api/article/submitArticle', (req, res) => {
+	let userName = req.query.userName;
+	let time = req.query.time;
+	let articleTitle = req.query.articleTitle;
+	let articleType = req.query.articleType;
+	let articleDesc = req.query.articleDesc;
+	let articleText = req.query.articleText;
+	let article = new models.article({
+		userName: userName,
+		time: time,
+		articleTitle: articleTitle,
+		articleType: articleType,
+		articleDesc: articleDesc,
+		articleText: articleText
+	});
+	if (articleTitle && articleType && articleText) {
+		article.save((err, data) => {
+			if (err) {
+				res.send(err);
+			} else {
+				res.send('提交成功');
+			}
+		});
+	} else {
+		res.send('标题、正文、类型不能为空');
+	}
+});
+
+//读取文章
+router.get('/api/article/getArticle', (req, res) => {
+	let userName = req.query.userName;
+	models.article.find({userName: userName}, (err, docs) => {
+		if (err) {
+			res.send(err);
+		} else {
+			console.log(docs);
+			res.json(docs);
+		}
+	});
+})
 
 module.exports = router;

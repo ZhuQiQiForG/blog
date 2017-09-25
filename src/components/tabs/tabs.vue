@@ -1,14 +1,14 @@
 <template>
 	<div class="tabs">
 		<div class="articleHeader">
-			<h1 class="title">{{article.title}}</h1>
+			<h1 class="title">{{article.articleTitle}}</h1>
 			<div class="info">
 				<span>{{article.time}}</span>
 				<span>点击{{article.hits}}</span>
 				<span>评论{{article.comments}}</span>
 			</div>
 		</div>
-		<p class="desc">{{article.desc}}</p>
+		<p class="desc">{{article.articleDesc}}</p>
 		<div class="readAll">
 			<a>阅读全文>></a>
 		</div>

@@ -9,7 +9,7 @@ db.once('error',() => console.log('Mongo connection error'));
 db.once('open',() => console.log('Mongo connection successed'));
 /************** 定义模式loginSchema **************/
 const loginSchema = mongoose.Schema({
-	// 定于数据模型
+	// 定于用户信息数据模型
     userName : String,
     password : String,
     avator: String,
@@ -18,10 +18,26 @@ const loginSchema = mongoose.Schema({
     github: String,
     mail: String
 });
+const article_typeSchema = mongoose.Schema({
+	// 定义用户文章分类数据模型
+	userName: String,
+	articleType: Array
+});
+const articleSchema = mongoose.Schema({
+	// 定义文章数据模型
+	userName: String,
+	time: String,
+	articleTitle: String,
+	articleType: String,
+	articleDesc: String,
+	articleText: String
+});
 
 /************** 定义模型Model **************/
 const Models = {
-    Login : mongoose.model('Login',loginSchema)
+    Login : mongoose.model('Login', loginSchema),
+    type: mongoose.model('type', article_typeSchema),
+    article: mongoose.model('article', articleSchema)
 }
 
 module.exports = Models;
