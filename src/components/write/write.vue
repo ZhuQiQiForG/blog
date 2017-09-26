@@ -72,7 +72,7 @@
 		methods: {
 			submit() {
 				this.time = nowDate();
-				console.log(this.time);
+				console.log(this.articleText);
 				this.$http.get('/api/article/submitArticle', {
 					params: {
 						userName: this.userName,

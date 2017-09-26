@@ -1,6 +1,7 @@
 const models = require('./db');
 const express = require('express');
 const router = express.Router();
+const markdown = require('markdown').markdown;
 
 /************** 创建(create) 读取(get) 更新(update) 删除(delete) **************/
 
@@ -154,17 +155,28 @@ router.get('/api/article/submitArticle', (req, res) => {
 	}
 });
 
-//读取文章
+//读取所有文章
 router.get('/api/article/getArticle', (req, res) => {
 	let userName = req.query.userName;
 	models.article.find({userName: userName}, (err, docs) => {
 		if (err) {
 			res.send(err);
 		} else {
-			console.log(docs);
 			res.json(docs);
 		}
 	});
 })
+
+//读取具体文章
+router.get('/api/article/getArticleDetail', (req, res) => {
+	let _id = req.query.id;
+	models.article.findOne({_id: _id}, (err, doc) => {
+		if (err) {
+			res.send(err);
+		} else {
+			res.json(doc);
+		}
+	})
+});
 
 module.exports = router;

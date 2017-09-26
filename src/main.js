@@ -7,6 +7,7 @@ import VueRouter from 'vue-router';
 import login from 'components/login/login';
 import index from 'components/index/index';
 import write from 'components/write/write';
+import detail from 'components/detail/detail';
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
 
@@ -32,6 +33,10 @@ const routes = [
 	{
 		path: '/write',
 		component: write
+	},
+	{
+		path: '/detail',
+		component: detail
 	}
 ];
 

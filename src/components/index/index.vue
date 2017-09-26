@@ -22,7 +22,7 @@
 					</ul>
 				</div>
 				<div class="write-wrapper">
-					<router-link :to="{path:'/write',query:{userName:this.userName}}">写文章</router-link>
+					<router-link :to="{path:'/write',query:{userName:this.userName}}" target="_blank">写文章</router-link>
 				</div>
 			</div>
 			<div class="right">

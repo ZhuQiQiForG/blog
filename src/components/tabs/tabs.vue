@@ -10,7 +10,7 @@
 		</div>
 		<p class="desc">{{article.articleDesc}}</p>
 		<div class="readAll">
-			<a>阅读全文>></a>
+			<router-link :to="{path:'/detail',query:{id: this.article._id}}">阅读全文>></router-link>
 		</div>
 	</div>
 </template>
