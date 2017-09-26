@@ -27,10 +27,16 @@
 				this.showAdd = !this.showAdd;
 			},
 			add() {
+				let _this = this;
 				this.$http.get('/api/article/addArticleType', {
 					params: {userName: this.userName, articleType: this.articleType}
 				}).then((res) => {
 					console.log(res);
+				});
+				this.$http.get('/api/article/getArticleType', {
+					params: {userName: this.userName}
+				}).then(function(res) {
+					_this.$emit('change-ArticleTypeContent', res.data.articleType);
 				});
 			}
 		}

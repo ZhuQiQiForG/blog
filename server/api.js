@@ -1,7 +1,6 @@
 const models = require('./db');
 const express = require('express');
 const router = express.Router();
-const markdown = require('markdown').markdown;
 
 /************** 创建(create) 读取(get) 更新(update) 删除(delete) **************/
 

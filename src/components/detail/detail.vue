@@ -8,7 +8,7 @@
 				<span class="type">文章分类：{{this.article.articleType}}</span>
 				<span class="time">发布时间：{{this.article.time}}</span>
 			</div>
-			<mavon-editor :value="this.article.articleText" :editable="false" :toolbarsFlag="false" :subfield="false" style="width: 840px;height: 600px"/>
+			<div v-html="this.article.articleText"></div>
 		</div>
 	</div>
 </template>

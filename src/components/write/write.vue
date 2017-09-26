@@ -18,7 +18,7 @@
 						<select class="selectarticleType" v-model="articleType">
 							<option v-for="item in articleTypeContent" :value="item">{{item}}</option>
 						</select>
-						<add :userName="this.userName"></add>
+						<add :userName="this.userName" @change-ArticleTypeContent="changeArticleTypeContent"></add>
 					</td>
 				</tr>
 				<tr>
@@ -34,8 +34,8 @@
 						<label for="articleText" class="title">正文</label>
 					</td>
 					<td>
-						<div class="editor-wrapper">
-							<mavon-editor v-model="articleText" style="width: 840px;height: 600px"/>
+						<div class="editor-wrapper" >
+							<quill-editor v-model="articleText" :options="editorOption"></quill-editor>
 						</div>
 					</td>
 				</tr>
@@ -58,7 +58,8 @@
 				articleDesc: '',
 				articleText: '',
 				time: '',
-				articleTypeContent: []
+				articleTypeContent: [],
+				editorOption: {}
 			};
 		},
 		created() {
@@ -67,12 +68,12 @@
 				params: {userName: this.userName}
 			}).then(function(res) {
 				_this.articleTypeContent = res.data.articleType;
+				console.log('cread' + _this.articleTypeContent);
 			});
 		},
 		methods: {
 			submit() {
 				this.time = nowDate();
-				console.log(this.articleText);
 				this.$http.get('/api/article/submitArticle', {
 					params: {
 						userName: this.userName,
@@ -85,6 +86,10 @@
 				}).then(function(res) {
 					console.log(res);
 				});
+			},
+			changeArticleTypeContent(val) {
+				this.articleTypeContent = val;
+				console.log(this.articleTypeContent);
 			}
 		},
 		components: {
@@ -116,4 +121,12 @@
 					.desc
 						width: 840px
 						height: 120px
+						box-sizing: border-box
+						border: 1px solid #ccc
+					.editor-wrapper
+						.quill-editor
+							width: 840px
+							height: 745px
+							.ql-container
+								height: 680px
 </style>

@@ -8,13 +8,12 @@ import login from 'components/login/login';
 import index from 'components/index/index';
 import write from 'components/write/write';
 import detail from 'components/detail/detail';
-import mavonEditor from 'mavon-editor';
-import 'mavon-editor/dist/css/index.css';
+import VueQuillEditor from 'vue-quill-editor';
 
+Vue.use(VueQuillEditor);
 Vue.prototype.$http = axios;
 Vue.use(VueRouter);
 Vue.config.productionTip = false;
-Vue.use(mavonEditor);
 
 // 定义路由
 const routes = [
