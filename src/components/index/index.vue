@@ -31,6 +31,7 @@
 						<tabs :article="item"></tabs>
 					</li>
 				</ul>
+				<page :userName="this.userName" :pageSize="this.pageSize" @change-page="changePage"></page>
 			</div>
 		</div>
 	</div>
@@ -41,40 +42,62 @@
 	import header from 'components/header/header';
 	import line from 'components/line/line';
 	import tabs from 'components/tabs/tabs';
+	import page from 'components/page/page';
 
 	export default {
 		components: {
 			login,
 			'v-header': header,
 			'v-line': line,
-			tabs
+			tabs,
+			page
 		},
 		data() {
 			return {
 				userName: this.$route.query.userName,
 				userInfo: {},
 				articleType: [],
-				articles: []
+				articles: [],
+				pageNum: 1,
+				pageSize: 5
 			};
 		},
 		created() {
 			let userName = this.userName;
 			let _this = this;
+			// 获取用户信息
 			this.$http.get('/api/user/getUserInfo', {
 				params: {userName: userName}
 			}).then(function(res) {
 				_this.userInfo = Object.assign({}, _this.userInfo, res.data);
 			});
+			// 获取该用户的文章分类
 			this.$http.get('/api/article/getArticleType', {
 				params: {userName: userName}
 			}).then(function(res) {
 				_this.articleType = res.data.articleType;
 			});
-			this.$http.get('/api/article/getArticle', {
-				params: {userName: userName}
-			}).then(function(res) {
-				_this.articles = res.data;
-			});
+			this.getIndexArticle();
+		},
+		methods: {
+			changePage(val) {
+				this.pageNum = val;
+				this.getIndexArticle();
+			},
+			getIndexArticle() {
+				// 获取首页文章列表
+				let _this = this;
+				this.$http.get('/api/article/getIndexArticle', {
+					params: {
+						userName: this.userName,
+						pageNum: this.pageNum,
+						pageSize: this.pageSize
+					}
+				}).then(function(res) {
+					console.log(res);
+					_this.articles = res.data;
+				});
+			}
 		}
 	};
 </script>

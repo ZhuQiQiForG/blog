@@ -164,7 +164,24 @@ router.get('/api/article/getArticle', (req, res) => {
 			res.json(docs);
 		}
 	});
-})
+});
+
+//读取某页文章
+router.get('/api/article/getIndexArticle', (req, res) => {
+	let userName = req.query.userName;
+	let pageNum = req.query.pageNum;
+	pageNum = parseInt(pageNum);
+	let pageSize = req.query.pageSize;
+	pageSize = parseInt(pageSize);
+	let skipNum = (pageNum - 1) * pageSize;
+	models.article.find({userName: userName}, (err, docs) => {
+		if (err) {
+			res.send(err);
+		} else {
+			res.json(docs);
+		}
+	}).limit(pageSize).skip(skipNum);
+});
 
 //读取具体文章
 router.get('/api/article/getArticleDetail', (req, res) => {

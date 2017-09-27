@@ -68,11 +68,11 @@
 				params: {userName: this.userName}
 			}).then(function(res) {
 				_this.articleTypeContent = res.data.articleType;
-				console.log('cread' + _this.articleTypeContent);
 			});
 		},
 		methods: {
 			submit() {
+				let _this = this;
 				this.time = nowDate();
 				this.$http.get('/api/article/submitArticle', {
 					params: {
@@ -85,11 +85,14 @@
 					}
 				}).then(function(res) {
 					console.log(res);
+					if (res.data === '提交成功') {
+						// 重定向到个人主页首页
+						_this.$router.push({path: '/index', query: {userName: _this.userName}});
+					}
 				});
 			},
 			changeArticleTypeContent(val) {
 				this.articleTypeContent = val;
-				console.log(this.articleTypeContent);
 			}
 		},
 		components: {

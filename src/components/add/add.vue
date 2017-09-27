@@ -32,7 +32,14 @@
 					params: {userName: this.userName, articleType: this.articleType}
 				}).then((res) => {
 					console.log(res);
+					if (res.data === '文章分类添加成功') {
+						_this.change();
+					}
 				});
+			},
+			change() {
+				let _this = this;
+				// 在vue2.0中 子组件像父组件传值的双向绑定不能像vue1.0中直接改变，要通过$emit方法来实现
 				this.$http.get('/api/article/getArticleType', {
 					params: {userName: this.userName}
 				}).then(function(res) {

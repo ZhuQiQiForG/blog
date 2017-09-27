@@ -10,6 +10,8 @@ import write from 'components/write/write';
 import detail from 'components/detail/detail';
 import VueQuillEditor from 'vue-quill-editor';
 
+import 'common/stylus/index.styl';
+
 Vue.use(VueQuillEditor);
 Vue.prototype.$http = axios;
 Vue.use(VueRouter);
