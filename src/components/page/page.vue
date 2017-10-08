@@ -1,12 +1,12 @@
 <template>
 	<div class="page">
 		<ul>
-			<li>
-				<i class="icon-arrow_lift" @click="previousPage"></i>
+			<li @click="previousPage" class="pAndn">
+				<i class="icon-arrow-left2"></i>
 			</li>
 			<li>{{this.pageNum}}/{{this.totalPage}}</li>
-			<li>
-				<i class="icon-keyboard_arrow_right" @click="nextPage"></i>
+			<li @click="nextPage" class="pAndn">
+				<i class="icon-arrow-right2"></i>
 			</li>
 		</ul>
 	</div>
@@ -60,12 +60,19 @@
 		width: 430px
 		height: 40px
 		line-height: 40px
-		border: 1px solid #333
 		text-align: center
 		ul
 			li
 				display: inline-block
 				width: 40px
 				height: 40px
-				border: 1px solid #333
+			.pAndn
+				border-radius: 50%
+				&:hover
+					cursor: pointer
+					background: #ccc
+				.icon-arrow_lift
+					font-size: 16px
+				.icon-keyboard_arrow_right
+					font-size: 18px
 </style>

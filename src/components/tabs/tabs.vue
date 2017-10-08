@@ -8,7 +8,7 @@
 				<span>评论{{article.comments}}</span>
 			</div>
 		</div>
-		<p class="desc">{{article.articleDesc}}</p>
+		<p class="desc"><span class="title">文章描述:</span><br/>&nbsp;&nbsp;{{article.articleDesc}}</p>
 		<div class="readAll">
 			<router-link :to="{path:'/detail',query:{id: this.article._id}}">阅读全文>></router-link>
 		</div>
@@ -27,11 +27,12 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
 	.tabs
-		margin-bottom: 30px
+		margin: 0 auto 30px auto
 		padding: 20px 30px
 		width: 570px
-		border: 1px solid #333
-		border-radius: 8px
+		border-radius: 12px
+		box-shadow: 1px 1px 3px #292929
+		background: #fff
 		.articleHeader
 			.title
 				margin-bottom: 16px
@@ -49,6 +50,8 @@
 		.desc
 			padding: 15px 0
 			line-height: 26px
+			.title
+				font-size: 14px
 		.readAll
 			font-size: 14px
 			color: #c14f4f

@@ -34,13 +34,13 @@
 						<label for="articleText" class="title">正文</label>
 					</td>
 					<td>
-						<div class="editor-wrapper" >
+						<div class="editor-wrapper">
 							<quill-editor v-model="articleText" :options="editorOption"></quill-editor>
 						</div>
 					</td>
 				</tr>
 			</table>
-			<button @click="submit">提交</button>
+			<button @click="submit" class="submitButton">提交</button>
 		</div>
 	</div>
 </template>
@@ -103,12 +103,14 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
 	.write
+		position: relative
 		margin: 0 auto
 		width: 990px
 		min-height: 560px
-		background: #fff
 		.table-wrapper
 			margin: 0 auto
+			padding-top: 30px
+			padding-bottom: 50px
 			width: 920px
 			.write-edit
 				width: 920px
@@ -118,18 +120,40 @@
 						font-weight: 700
 						font-size: 16px
 					.titleInput
+						background: #fef9f1
+						width: 400px
 						border-top: none
 						border-left: none
 						border-right: none
+						border-bottom: 1px solid #333
+						&:focus
+							outline: none
 					.desc
 						width: 840px
 						height: 120px
 						box-sizing: border-box
 						border: 1px solid #ccc
 					.editor-wrapper
+						margin: 0
+						padding: 0
+						width: 840px
+						background: #fff
 						.quill-editor
 							width: 840px
 							height: 745px
 							.ql-container
 								height: 680px
+		.submitButton
+			position: absolute
+			right: 50px
+			display: block
+			width: 114px
+			height: 36px
+			background: #fff
+			border-radius: 15px
+			&:focus
+				outline: none
+			&:active
+				background: #ccc
+				color: #fff
 </style>

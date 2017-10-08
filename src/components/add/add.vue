@@ -1,10 +1,10 @@
 <template>
 	<div class="add">
-		<button @click="show">添加文章分类</button>
+		<button @click="show" class="addTypeButton">添加文章分类</button>
 		<div class="addType" v-show="showAdd">
-			<h1>分类名称</h1>
-			<input type="" name="" placeholder="请输入分类名称" v-model="articleType">
-			<button @click="add">添加</button>
+			<h1 class="title">分类名称</h1>
+			<input type="" name="" placeholder="请输入分类名称" v-model="articleType" class="addInput">
+			<button @click="add" class="addButton">添加</button>
 		</div>
 	</div>
 </template>
@@ -56,11 +56,37 @@
 		display: inline-block
 		.addType
 			position: absolute
-			top: 25px
-			left: 0
+			top: 22px
+			left: 10px
+			padding: 10px
 			z-index: 1600
-			width: 401px
-			height: 115px
+			width: 280px
+			height: 20px
+			background: #FFFAFA
+			border: 1px solid #ccc
+			border-radius: 5px
+			.title
+				display: inline-block
+				margin-bottom: 20px
+			.addInput
+				border-top: none
+				border-left: none
+				border-right: none
+				border-bottom: 1px solid #333
+				background: #FFFAFA
+			.addButton
+				display: inline-block
+				padding: 2px 4px
+				border-radius: 5px
+				background: #fff
+				border: none
+				box-shadow: 1px 1px 1px 3px #ccc
+		.addTypeButton
+			display: inline-block
+			margin-left: 10px
+			padding: 2px 4px
+			border-radius: 5px
 			background: #fff
-			border: 1px solid #333
+			border: none
+			box-shadow: 1px 1px 1px 3px #ccc
 </style>

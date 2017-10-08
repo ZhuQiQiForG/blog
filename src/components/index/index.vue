@@ -1,32 +1,31 @@
 <template>
 	<div class="index">
 		<v-header :userName="this.userInfo.userName"></v-header>
-		<v-line></v-line>
 		<div class="content">
 			<div class="left">
 				<div class="userInfo">
 					<div class="avator">
 						<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3929251423,454148251&fm=27&gp=0.jpg" width="159" height="159">
 					</div>
-					<ul>
-						<li class="info">手机号:{{userInfo.phone}}</li>
-						<li class="info">github:{{userInfo.github}}</li>
-						<li class="info">电子邮箱:{{userInfo.mail}}</li>
+					<ul class="info-wrapper">
+						<li class="info" v-show="this.userInfo.phone">手机号:{{userInfo.phone}}</li>
+						<li class="info" v-show="this.userInfo.github">github:{{userInfo.github}}</li>
+						<li class="info" v-show="this.userInfo.mail">电子邮箱:{{userInfo.mail}}</li>
 					</ul>
+					<div class="write-wrapper">
+						<router-link :to="{path:'/write',query:{userName:this.userName}}" target="_blank">写文章</router-link>
+					</div>
 				</div>
-				<v-line></v-line>
 				<div class="articleType-wrapper">
 					<h1 class="title">文章分类</h1>
+					<v-line></v-line>
 					<ul>
 						<li class="articleType" v-for="item in articleType">{{item}}</li>
 					</ul>
 				</div>
-				<div class="write-wrapper">
-					<router-link :to="{path:'/write',query:{userName:this.userName}}" target="_blank">写文章</router-link>
-				</div>
 			</div>
 			<div class="right">
-				<ul>
+				<ul class="tabs-ul">
 					<li class="tabs-wrapper" v-for="item in articles">
 						<tabs :article="item"></tabs>
 					</li>
@@ -43,6 +42,7 @@
 	import line from 'components/line/line';
 	import tabs from 'components/tabs/tabs';
 	import page from 'components/page/page';
+	import add from 'components/add/add';
 
 	export default {
 		components: {
@@ -50,7 +50,8 @@
 			'v-header': header,
 			'v-line': line,
 			tabs,
-			page
+			page,
+			add
 		},
 		data() {
 			return {
@@ -105,36 +106,49 @@
 <style lang="stylus" rel="stylesheet/stylus">
 	.index
 		margin: 0 auto
-		width: 990px
-		min-height: 560px
-		background: #fff
+		min-height: 990px
+		width: 1050px
 		.content
 			display: flex
 			margin: 0 auto
 			padding-top: 15px
-			width: 950px
+			width: 1000px
+			min-height: 800px
 		.left
 			flex: 0 0 265px
 			padding: 0 10px
 			box-sizing: box-sizing
 			width: 265px
-			border-right: 1px solid #333
 			.userInfo
+				padding: 15px
 				width: 100%
+				box-sizing: border-box
 				.avator
 					margin: 0 auto
 					width: 159px
 					height: 159px
 					border-radius: 50%
 					overflow: hidden
-				.info
-					margin: 10px 0
+				.info-wrapper
+					margin-bottom: 20px
+					.info
+						margin: 15px 0
+						text-align: center
+				.write-wrapper
+					margin: 0 auto
+					width: 80px
+					height: 32px
+					line-height: 32px
 					text-align: center
+					background: #fff
+					border-radius: 5px
+					box-shadow: 2px 2px 2px 4px #ccc
 			.articleType-wrapper
 				width: 100%
 				text-align: center
 				.title
 					margin-top: 20px
+					margin-bottom: 10px
 					font-size: 16px
 					font-weight: 700
 				.articleType
@@ -144,6 +158,16 @@
 			.write-wrapper
 				background: #dedede
 		.right
+			position: relative
 			flex: 1
 			padding: 0 10px
+			.tabs-ul
+				margin-bottom: 80px
+			.tabs-wrapper
+				width: 100%
+			.page
+				position: absolute
+				bottom: 20px
+				left: 50%
+				margin-left: -265px
 </style>
